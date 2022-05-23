@@ -2,3 +2,4 @@
 #       2. Register support for 2's complement numbers
 #       3. Ram module
 #       4. REST API
+#       5. I/O and Register instructions
