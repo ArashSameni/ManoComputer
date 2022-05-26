@@ -1,0 +1,200 @@
+/* PrismJS 1.28.0
+https://prismjs.com/download.html#themes=prism-tomorrow
+https://prismjs.com/download.html#themes=prism-okaidia
+*/
+
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono:400,400i,700,700i");
+
+.tomorrow-theme .rmce {
+  color: #ccc;
+}
+
+.okaidia-theme .rmce {
+  color: #f8f8f2;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+}
+
+.tomorrow-theme :not(pre) > .rmce {
+  background: #2d2d2d;
+}
+
+.okaidia-theme :not(pre) > .rmce {
+  background: #272822;
+}
+
+/* Tomorrow */
+.tomorrow-theme .rmce .token.block-comment,
+.tomorrow-theme .rmce .token.cdata,
+.tomorrow-theme .rmce .token.comment,
+.tomorrow-theme .rmce .token.doctype,
+.tomorrow-theme .rmce .token.prolog {
+  color: #999;
+}
+
+.tomorrow-theme .rmce .token.punctuation {
+  color: #ccc;
+}
+
+.tomorrow-theme .rmce .token.attr-name,
+.tomorrow-theme .rmce .token.deleted,
+.tomorrow-theme .rmce .token.namespace,
+.tomorrow-theme .rmce .token.tag {
+  color: #e2777a;
+}
+
+.tomorrow-theme .rmce .token.function-name {
+  color: #6196cc;
+}
+
+.tomorrow-theme .rmce .token.boolean,
+.tomorrow-theme .rmce .token.function,
+.tomorrow-theme .rmce .token.number {
+  color: #f08d49;
+}
+
+.tomorrow-theme .rmce .token.class-name,
+.tomorrow-theme .rmce .token.constant,
+.tomorrow-theme .rmce .token.property,
+.tomorrow-theme .rmce .token.symbol {
+  color: #f8c555;
+}
+
+.tomorrow-theme .rmce .token.atrule,
+.tomorrow-theme .rmce .token.builtin,
+.tomorrow-theme .rmce .token.important,
+.tomorrow-theme .rmce .token.keyword,
+.tomorrow-theme .rmce .token.selector {
+  color: #cc99cd;
+}
+
+.tomorrow-theme .rmce .token.attr-value,
+.tomorrow-theme .rmce .token.char,
+.tomorrow-theme .rmce .token.regex,
+.tomorrow-theme .rmce .token.string,
+.tomorrow-theme .rmce .token.variable {
+  color: #7ec699;
+}
+
+.tomorrow-theme .rmce .token.entity,
+.tomorrow-theme .rmce .token.operator,
+.tomorrow-theme .rmce .token.url {
+  color: #67cdcc;
+}
+
+.tomorrow-theme .rmce .token.bold,
+.tomorrow-theme .rmce .token.important {
+  font-weight: 700;
+}
+
+.tomorrow-theme .rmce .token.italic {
+  font-style: italic;
+}
+
+.tomorrow-theme .rmce .token.entity {
+  cursor: help;
+}
+
+.tomorrow-theme .rmce .token.inserted {
+  color: green;
+}
+
+/* Okaidia */
+.okaidia-theme .rmce .token.cdata,
+.okaidia-theme .rmce .token.comment,
+.okaidia-theme .rmce .token.doctype,
+.okaidia-theme .rmce .token.prolog {
+  color: #8292a2;
+}
+
+.okaidia-theme .rmce .token.punctuation {
+  color: #f8f8f2;
+}
+
+.okaidia-theme .rmce .token.namespace {
+  opacity: 0.7;
+}
+
+.okaidia-theme .rmce .token.constant,
+.okaidia-theme .rmce .token.deleted,
+.okaidia-theme .rmce .token.property,
+.okaidia-theme .rmce .token.symbol,
+.okaidia-theme .rmce .token.tag {
+  color: #f92672;
+}
+
+.okaidia-theme .rmce .token.boolean,
+.okaidia-theme .rmce .token.number {
+  color: #ae81ff;
+}
+
+.okaidia-theme .rmce .token.attr-name,
+.okaidia-theme .rmce .token.builtin,
+.okaidia-theme .rmce .token.char,
+.okaidia-theme .rmce .token.inserted,
+.okaidia-theme .rmce .token.selector,
+.okaidia-theme .rmce .token.string {
+  color: #a6e22e;
+}
+
+.okaidia-theme .language-css .rmce .token.string,
+.okaidia-theme .style .rmce .token.string,
+.okaidia-theme .rmce .token.entity,
+.okaidia-theme .rmce .token.operator,
+.okaidia-theme .rmce .token.url,
+.okaidia-theme .rmce .token.variable {
+  color: #f8f8f2;
+}
+
+.okaidia-theme .rmce .token.atrule,
+.okaidia-theme .rmce .token.attr-value,
+.okaidia-theme .rmce .token.class-name,
+.okaidia-theme .rmce .token.function {
+  color: #e6db74;
+}
+
+.okaidia-theme .rmce .token.keyword {
+  color: #66d9ef;
+}
+
+.okaidia-theme .rmce .token.important,
+.okaidia-theme .rmce .token.regex {
+  color: #fd971f;
+}
+
+.okaidia-theme .rmce .token.bold,
+.okaidia-theme .rmce .token.important {
+  font-weight: 700;
+}
+
+.okaidia-theme .rmce .token.italic {
+  font-style: italic;
+}
+
+.okaidia-theme .rmce .token.entity {
+  cursor: help;
+}
+
+.rmce {
+  background-color: #363636;
+  color: #eee;
+  display: block;
+  caret-color: #eee;
+  border-radius: 8px;
+  backface-visibility: hidden;
+  overflow: auto;
+  box-sizing: border-box;
+  white-space: pre;
+  font-size: 15px;
+  line-height: normal;
+  vertical-align: middle;
+  padding: 1em;
+  font-family: Roboto Mono, monospace;
+  font-size: 1.2rem;
+  tab-size: 2;
+  outline: none;
+}
+
+.rmce::selection,
+.rmce ::selection {
+  background: rgb(50, 112, 121);
+}
