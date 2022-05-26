@@ -1,5 +1,10 @@
+:root {
+    --separator-border: rgb(202, 202, 202) !important;
+}
+
 .container {
     width: 100%;
     height: 100vh;
-    background-color: red;
+    background-color: #292929;
+    color: #fff;
 }

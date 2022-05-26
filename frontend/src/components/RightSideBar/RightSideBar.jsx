@@ -1,7 +1,7 @@
 import Navbar from "./Navbar";
 import Simulator from "./Simulator";
 
-const Tabs = () => {
+const RightSideBar = () => {
     return (
         <>
             <Navbar />
@@ -10,4 +10,4 @@ const Tabs = () => {
     )
 }
 
-export default Tabs;
+export default RightSideBar;

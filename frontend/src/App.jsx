@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './App.module.css';
-import CodeEditor from './components/CodeEditor';
-import Tabs from './components/Tabs';
+import RightSideBar from './components/RightSideBar';
+import LeftSideBar from './components/LeftSideBar';
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 
@@ -14,11 +14,10 @@ function App() {
     <div className={styles.container}>
       <Allotment>
         <Allotment.Pane minSize={350} preferredSize='40%' >
-          <CodeEditor theme={theme} />
+          <LeftSideBar />
         </Allotment.Pane>
         <Allotment.Pane>
-          <Tabs />
-            <button onClick={handleToggle}>Toggle</button>
+          <RightSideBar />
         </Allotment.Pane>
       </Allotment>
     </div>

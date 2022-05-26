@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import CE from 'rmce';
-import '../../assets/prism/mano-asm';
-import '../../assets/prism/prism.css';
+import '../../../assets/prism/mano-asm';
+import '../../../assets/prism/prism.css';
 import styles from './CodeEditor.module.css';
 
 const CodeBox = ({ theme }) => {

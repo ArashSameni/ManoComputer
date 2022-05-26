@@ -1,0 +1,10 @@
+.button {
+    float: right;
+    margin-right: 20px;
+    height: 40px;
+    transition: all .2s;
+}
+
+.button:hover {
+    filter: hue-rotate(60deg);
+}
