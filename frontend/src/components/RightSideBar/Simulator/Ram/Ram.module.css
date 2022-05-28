@@ -1,0 +1,99 @@
+.container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 300px;
+}
+
+.container header {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  background-color: #32bea6;
+  height: 3rem;
+  width: calc(100% - 5px);
+}
+
+.container header th {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.content {
+  width: 100%;
+  height: 300px;
+  background: #444;
+  color: #000;
+  overflow-y: scroll;
+}
+
+.content::-webkit-scrollbar {
+  width: 5px;
+  background-color: #f5f5f5;
+}
+
+.content::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: #f90;
+  background-image: -webkit-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    transparent 75%,
+    transparent
+  );
+}
+
+.content table {
+  position: relative;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: center;
+  width: 100%;
+}
+
+.content tbody {
+  display: block;
+  margin-top: 3rem;
+}
+
+.content tr {
+  width: 100%;
+  display: flex;
+}
+
+.content th,
+.content td {
+  display: block;
+  flex-grow: 1;
+  height: 3rem;
+  padding: 0.75em 1.5em;
+}
+
+.content th {
+  font-weight: bold;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.content tbody tr {
+  background-color: #fff;
+  transition: all 0.125s ease-in-out;
+}
+
+.content tbody tr:nth-child(2n-1) {
+  background-color: #f5f5f5;
+}
+
+.content tbody tr:hover {
+  background-color: #6fa3ff;
+}
