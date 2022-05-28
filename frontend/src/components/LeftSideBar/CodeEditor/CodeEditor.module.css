@@ -1,6 +1,6 @@
 .container {
     width: 100%;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 50px - 44px);
 }
 
 .container code {
