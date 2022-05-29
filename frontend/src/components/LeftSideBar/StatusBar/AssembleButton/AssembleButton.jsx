@@ -3,7 +3,7 @@ import icon from '../../../../assets/play-icon.png';
 
 const AssembleButton = () => {
     return (
-        <a href="/#"><img src={icon} alt='Build Button' className={styles.button} /></a>
+        <a href="/#"><img src={icon} alt='Assemble' className={styles.button} /></a>
     )
 };
 
