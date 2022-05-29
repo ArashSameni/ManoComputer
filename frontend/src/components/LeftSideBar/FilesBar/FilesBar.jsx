@@ -6,7 +6,6 @@ const FilesBar = ({ files, currentFileID, onFileChanged, onFileClosed }) => {
             {files.map(f => (
                 <span key={f.id} onClick={() => onFileChanged(f.id)} className={`${styles.tab} ${f.id === currentFileID && styles.active}`}>
                     <span>{f.fileName}</span>
-                    {console.log('file.id,currentfile', f.id, currentFileID)}
                     <div onClick={() => onFileClosed(f.id)} className={styles.close}>x</div>
                 </span>
             ))}

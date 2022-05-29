@@ -3,6 +3,7 @@ const path = require('path')
 const fs = require('fs');
 
 let fileID = 1;
+let untitledNumber = 2;
 
 function createWindow() {
   // Create the browser window.
@@ -25,7 +26,19 @@ function createWindow() {
       label: 'File',
       submenu: [
         {
-          label: 'New File...'
+          label: 'New File...',
+          accelerator: 'CmdOrCtrl+N',
+          click() {
+            let file = {
+              id: fileID,
+              fileName: `Untitled-${untitledNumber}.asm`,
+              content: '',
+              path: null
+            }
+            fileID += 1;
+            untitledNumber += 1;
+            mainWindow.webContents.send('NEW_FILE', file)
+          }
         },
         {
           label: 'Open File...',
@@ -56,7 +69,7 @@ function createWindow() {
                       content: data,
                       path: fileObj.filePaths[0]
                     }
-                    mainWindow.webContents.send('FILE_OPEN', file)
+                    mainWindow.webContents.send('OPEN_FILE', file)
                     fileID += 1;
                   });
                 }

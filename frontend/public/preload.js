@@ -1,5 +1,12 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
-    handleFileOpen: (callback) => ipcRenderer.on('FILE_OPEN', callback)
+    handleOpenFile: callback => {
+        ipcRenderer.removeAllListeners('OPEN_FILE')
+        ipcRenderer.on('OPEN_FILE', callback)
+    },
+    handleNewFile: callback =>{
+        ipcRenderer.removeAllListeners('NEW_FILE')
+        ipcRenderer.on('NEW_FILE', callback)
+    }
 })
