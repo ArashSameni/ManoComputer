@@ -52,13 +52,16 @@
   border: none;
 }
 
-.tab:hover,
-.tab.active:hover {
+.tab:hover {
   background-color: #3e0d99;
 }
 
 .tab.active {
   background-color: #2c086e;
+}
+
+.tab.active:hover {
+  background-color: #280766;
 }
 
 .close {

@@ -1,0 +1,101 @@
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400,400i,700,700i')
+
+.rmce
+	background-color: #363636
+	color: #eee
+	display: block
+	caret-color: #eee
+	border-radius: 8px
+
+	backface-visibility: hidden
+
+	overflow: auto
+	box-sizing: border-box
+	white-space: pre
+	font-size: 15px
+	line-height: normal
+
+	vertical-align: middle
+
+	padding: 1em
+	font-family: Roboto Mono, monospace
+	tab-size: 2
+
+
+	outline: none
+
+	&::selection,
+	::selection
+		background: #999999
+
+	.namespace
+		opacity: 0.7
+
+/*
+ * Material Darker theme for PrismJS
+ *
+ * @author Oleg Dutchenko
+ * @license MIT 2018
+ */
+
+	.atrule,
+	.constant,
+	.function,
+	.important,
+	.boolean,
+	.keyword,
+	.symbol,
+	.id
+		color: #c792ea
+
+	.attr-name,
+	.builtin,
+	.class
+		color: #ffcb6b
+
+	.comment,
+	.doctype,
+	.prolog
+		color: #616161
+
+	.inserted,
+	.property,
+	.cdata,
+	.char
+		color: #80cbc4
+
+	.operator,
+	.punctuation
+		color: #89ddff
+
+	.class-name,
+	.hexcode,
+	.regex
+		color: #f2ff00
+
+	.attr-value,
+	.attribute,
+	.pseudo-class,
+	.pseudo-element,
+	.string
+		color: #a5e844
+
+	.number,
+	.unit
+		color: #fd9170
+
+	.selector,
+	.variable,
+	.deleted,
+	.entity,
+	.tag,
+	.url
+		color: #ff6666
+
+	.important,
+	.id
+		font-weight: bold
+
+.wrap
+	white-space: pre-wrap

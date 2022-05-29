@@ -15,7 +15,7 @@
   width: calc(100% - 5px);
 }
 
-.container header th {
+.container header span {
   display: flex;
   justify-content: center;
   align-items: center;

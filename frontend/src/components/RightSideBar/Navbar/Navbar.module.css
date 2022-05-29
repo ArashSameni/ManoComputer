@@ -16,11 +16,14 @@
   cursor: default;
 }
 
-.NavLink:hover,
-.NavLink.active:hover {
+.NavLink:hover {
   background-color: #3e0d99;
 }
 
 .NavLink.active {
   background-color: #2c086e;
+}
+
+.NavLink.active:hover {
+  background-color: #280766;
 }

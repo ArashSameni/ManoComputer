@@ -1,18 +1,13 @@
 import styles from './FilesBar.module.css';
 
-const files = [
-    { fileName: 'Untitled-1.asm', active: false, path: '1'},
-    { fileName: 'Untitled-2.asm', active: true, path: '2'},
-    { fileName: 'mmd.asm', active: false, path: '3'},
-]
-
-const FilesBar = () => {
+const FilesBar = ({ files, currentFileID, onFileChanged, onFileClosed }) => {
     return (
         <div className={styles.container}>
             {files.map(f => (
-                <span key={f.path} className={`${styles.tab} ${f.active && styles.active}`}>
+                <span key={f.id} onClick={() => onFileChanged(f.id)} className={`${styles.tab} ${f.id === currentFileID && styles.active}`}>
                     <span>{f.fileName}</span>
-                    <div className={styles.close}>x</div>
+                    {console.log('file.id,currentfile', f.id, currentFileID)}
+                    <div onClick={() => onFileClosed(f.id)} className={styles.close}>x</div>
                 </span>
             ))}
         </div>

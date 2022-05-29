@@ -9,11 +9,13 @@
     "@testing-library/user-event": "^13.5.0",
     "allotment": "^1.14.1",
     "electron": "^19.0.1",
+    "fs": "^0.0.1-security",
+    "path-browserify": "^1.0.1",
+    "prismjs": "^1.28.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
     "react-split-pane": "^2.0.3",
-    "rmce": "^2.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -8,10 +8,10 @@ const Ram = () => {
     return (
         <div className={styles.container}>
             <header>
-                <th>Address</th>
-                <th>Label</th>
-                <th>Instruction</th>
-                <th>HEX</th>
+                <span>Address</span>
+                <span>Label</span>
+                <span>Instruction</span>
+                <span>HEX</span>
             </header>
             <div className={styles.content}>
                 <table>
