@@ -1,0 +1,57 @@
+.container {
+  padding: 20px;
+  height: calc(100% - 300px - 3rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.value {
+  margin-left: 5px;
+}
+
+.micro {
+    font-size: 18px;
+  text-align: center;
+}
+
+.registers {
+  margin-top: 18px;
+  font-size: 17px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.registers .description {
+  flex-grow: 1;
+  width: 33%;
+  text-align: center;
+}
+
+.flags {
+    font-size: 17px;
+    margin-top: 18px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.buttons {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.buttons button {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 8px 16px;
+  border: 0;
+  color: #fff;
+  background-color: #380a8e;
+  transition: all 0.2s;
+  font-size: 15px;
+}
+
+.buttons button:hover {
+  background-color: #2c086e;
+}
