@@ -12,7 +12,7 @@ function App() {
         <Allotment.Pane minSize={350} preferredSize='40%' >
           <LeftSideBar />
         </Allotment.Pane>
-        <Allotment.Pane>
+        <Allotment.Pane minSize={370}>
           <RightSideBar />
         </Allotment.Pane>
       </Allotment>
