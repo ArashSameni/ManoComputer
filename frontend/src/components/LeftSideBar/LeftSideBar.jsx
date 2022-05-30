@@ -13,7 +13,7 @@ const LeftSideBar = () => {
     }]);
     const [currentFileID, setCurrentFileID] = useState(0);
 
-    window.electronAPI.handleOpenFile((event, file) => {
+    window.electronAPI.handleOpenFile((_, file) => {
         setFiles(prev => {
             if (prev.some(f => f.path === file.path))
                 return prev.map(f => f.path === file.path ? file : f)
@@ -22,7 +22,7 @@ const LeftSideBar = () => {
         setCurrentFileID(file.id)
     })
 
-    window.electronAPI.handleNewFile((event, file) => {
+    window.electronAPI.handleNewFile((_, file) => {
         setFiles(prev => {
             if (prev.some(f => f.id === prev.id))
                 return prev
