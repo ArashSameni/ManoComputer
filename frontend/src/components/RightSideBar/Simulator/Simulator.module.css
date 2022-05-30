@@ -10,8 +10,8 @@
   margin-left: 5px;
 }
 
-.micro {
-    font-size: 18px;
+.description.micro {
+  font-size: 18px;
   text-align: center;
 }
 
@@ -28,11 +28,15 @@
   text-align: center;
 }
 
+.description {
+  font-size: 17px;
+}
+
 .flags {
-    font-size: 17px;
-    margin-top: 18px;
-    display: flex;
-    justify-content: space-around;
+  font-size: 17px;
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-around;
 }
 
 .buttons {
@@ -54,4 +58,84 @@
 
 .buttons button:hover {
   background-color: #2c086e;
+}
+
+.clockContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.clockContainer .range {
+  margin: 0 8px;
+  padding: 0;
+  width: 12.5em;
+  height: 1.5em;
+  background: transparent;
+  font: 1em/1 arial, sans-serif;
+}
+.clockContainer .range, .clockContainer .range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+.clockContainer .range::-webkit-slider-runnable-track {
+  box-sizing: border-box;
+  border: none;
+  width: 12.5em;
+  height: 0.25em;
+  background: #fff;
+}
+.clockContainer .range::-moz-range-track {
+  box-sizing: border-box;
+  border: none;
+  width: 12.5em;
+  height: 0.25em;
+  background: #fff;
+}
+.clockContainer .range::-ms-track {
+  box-sizing: border-box;
+  border: none;
+  width: 12.5em;
+  height: 0.25em;
+  background: #fff;
+}
+.clockContainer .range::-webkit-slider-thumb {
+  margin-top: -0.625em;
+  box-sizing: border-box;
+  border: none;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  background: #380a8e;
+  border: 3px solid #fff;
+}
+.clockContainer .range::-moz-range-thumb {
+  box-sizing: border-box;
+  border: none;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  background: #380a8e;
+}
+.clockContainer .range::-ms-thumb {
+  margin-top: 0;
+  box-sizing: border-box;
+  border: none;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  background: #380a8e;
+}
+.clockContainer .range::-ms-tooltip {
+  display: none;
+}
+
+.clockContainer label {
+  display: inline-block;
+  position: relative;
+  width: 60px;
+  color: #fff;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 3px;
+  background: #380a8e;
+  padding: 5px 10px;
 }
