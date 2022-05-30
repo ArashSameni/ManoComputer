@@ -3,7 +3,7 @@
   margin-right: 20px;
   height: 40px;
   transition: all 0.2s;
-  cursor: default;
+  cursor: pointer;
 }
 
 .button:hover {
