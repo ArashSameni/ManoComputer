@@ -32,6 +32,14 @@ const LeftSideBar = () => {
         setCurrentFileID(file.id)
     })
 
+    window.electronAPI.handleCloseFile(() => {
+        handleFileClose(currentFileID)
+    })
+
+    window.electronAPI.handleCloseAll(() => {
+        setFiles([])
+    })
+
     const handleCodeChange = code => {
         setFiles(prev => {
             return prev.map(f => f.id === currentFileID ? { ...f, content: code } : { ...f })

@@ -100,6 +100,22 @@ function createWindow() {
           type: 'separator'
         },
         {
+          label: 'Close File',
+          accelerator: 'CmdOrCtrl+W',
+          click() {
+            mainWindow.webContents.send('CLOSE_FILE')
+          }
+        },
+        {
+          label: 'Close All',
+          click() {
+            mainWindow.webContents.send('CLOSE_ALL')
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
           role: 'quit'
         }
       ]

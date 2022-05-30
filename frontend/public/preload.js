@@ -9,5 +9,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
     handleNewFile: callback =>{
         ipcRenderer.removeAllListeners('NEW_FILE')
         ipcRenderer.on('NEW_FILE', callback)
-    }
+    },
+    handleCloseFile: callback =>{
+        ipcRenderer.removeAllListeners('CLOSE_FILE')
+        ipcRenderer.on('CLOSE_FILE', callback)
+    },
+    handleCloseAll: callback =>{
+        ipcRenderer.removeAllListeners('CLOSE_ALL')
+        ipcRenderer.on('CLOSE_ALL', callback)
+    },
 })
