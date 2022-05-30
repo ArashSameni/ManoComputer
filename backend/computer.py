@@ -22,8 +22,9 @@ class Computer:
         self.IEN = False
         self.FGI = False
         self.FGO = True
+        self.r = False
+        self.p = False
         self.conditions = conditions
-        self.PC @= "100"
 
     def T(self, step):
         return self.SC == step
@@ -55,3 +56,6 @@ class Computer:
                     for action in actions:
                         exec(action, {"Computer": self})
             self.SC += 1
+    def start(self):
+        self.PC @= "100"
+        self.S = True
