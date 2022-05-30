@@ -1,11 +1,11 @@
 .button {
-    float: right;
-    margin-right: 20px;
-    height: 40px;
-    transition: all .2s;
-    cursor: default;
+  float: right;
+  margin-right: 20px;
+  height: 40px;
+  transition: all 0.2s;
+  cursor: default;
 }
 
 .button:hover {
-    filter: brightness(0.9)
+    transform: rotate(50deg);
 }
