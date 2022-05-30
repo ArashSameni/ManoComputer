@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import FilesBar from './FilesBar';
 import CodeEditor from './CodeEditor';
 import StatusBar from './StatusBar';
+import AboutUs from './AboutUs';
 import styles from './LeftSideBar.module.css';
-import FilesBar from './FilesBar';
 
 const LeftSideBar = () => {
     const [files, setFiles] = useState([{
@@ -51,7 +52,8 @@ const LeftSideBar = () => {
     return (
         <div className={styles.LeftSideBar}>
             <FilesBar files={files} currentFileID={currentFileID} onFileChanged={handleFileChange} onFileClosed={handleFileClose} />
-            <CodeEditor readOnly={files.length === 0} code={files.find(f => f.id === currentFileID)?.content || ''} onCodeChanged={handleCodeChange} />
+            {files.length > 0 && <CodeEditor readOnly={files.length === 0} code={files.find(f => f.id === currentFileID)?.content || ''} onCodeChanged={handleCodeChange} />}
+            {files.length === 0 && <AboutUs />}
             <StatusBar />
         </div>
     );

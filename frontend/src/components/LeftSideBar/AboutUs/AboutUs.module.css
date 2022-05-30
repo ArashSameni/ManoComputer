@@ -1,0 +1,23 @@
+.container {
+  width: 100%;
+  height: calc(100vh - 50px - 44px);
+  background-color: #363636;
+  text-align: center;
+  padding-top: 40px;
+}
+
+.container h1 {
+    margin-bottom: 40px;
+    color: #fff;
+}
+
+.container h3 {
+  color: #bbb;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.container h3:hover {
+  color: #fff;
+}

@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, dialog } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain, dialog, shell } = require('electron')
 const path = require('path')
 const fs = require('fs');
 
@@ -17,6 +17,10 @@ function createWindow() {
       enableRemoteModule: true,
       preload: path.join(__dirname, 'preload.js')
     }
+  })
+
+  ipcMain.on('OPEN_BROWSER', (_, link) => {
+    shell.openExternal(link)
   })
 
   //load the index.html from a url
