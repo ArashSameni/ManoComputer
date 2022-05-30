@@ -2,7 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
     openBrowser: link => ipcRenderer.send('OPEN_BROWSER', link),
-    handleNewFile: callback =>{
+    handleNewFile: callback => {
         ipcRenderer.removeAllListeners('NEW_FILE')
         ipcRenderer.on('NEW_FILE', callback)
     },
@@ -18,16 +18,21 @@ contextBridge.exposeInMainWorld('electronAPI', {
         ipcRenderer.removeAllListeners('SAVE_AS')
         ipcRenderer.on('SAVE_AS', callback)
     },
-    handleCloseFile: callback =>{
+    handleCloseFile: callback => {
         ipcRenderer.removeAllListeners('CLOSE_FILE')
         ipcRenderer.on('CLOSE_FILE', callback)
     },
-    handleCloseAll: callback =>{
+    handleCloseAll: callback => {
         ipcRenderer.removeAllListeners('CLOSE_ALL')
         ipcRenderer.on('CLOSE_ALL', callback)
     },
-    handleFilePathChanged: callback =>{
+    handleFilePathChanged: callback => {
         ipcRenderer.removeAllListeners('CHANGE_PATH')
         ipcRenderer.on('CHANGE_PATH', callback)
-    }, 
+    },
+    onFileSaved: callback => {
+        ipcRenderer.removeAllListeners('FILE_SAVED')
+        ipcRenderer.on('FILE_SAVED', callback)
+    },
+    onFileClose: file => ipcRenderer.send('FILE_CLOSE', file)
 })

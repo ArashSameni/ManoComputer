@@ -10,6 +10,7 @@ const LeftSideBar = () => {
         id: 0,
         fileName: 'Untitled-1.asm',
         content: '',
+        saved: true,
         path: null
     }]);
     const [currentFileID, setCurrentFileID] = useState(0);
@@ -49,12 +50,24 @@ const LeftSideBar = () => {
     window.electronAPI.handleFilePathChanged((_, newPath) => {
         const fileName = newPath.split('\\').pop().split('/').pop()
         setFiles(prev => prev.map(
-            f => f.id === currentFileID ? { ...f, fileName, path: newPath } : f
+            f => f.id === currentFileID ? { ...f, fileName, path: newPath, saved: true } : f
         ))
     })
 
-    window.electronAPI.handleCloseFile(() => {
-        handleFileClose(currentFileID)
+    window.electronAPI.onFileSaved(() => {
+        setFiles(prev => prev.map(
+            f => f.id === currentFileID ? { ...f, saved: true } : f
+        ))
+    })
+
+    window.electronAPI.handleCloseFile((_, id) => {
+        if(id === -1)
+        {
+            if(files.length)
+                handleFileClose(currentFileID);
+            return;
+        }
+        setFiles(prev => prev.filter(f => f.id !== id))
     })
 
     window.electronAPI.handleCloseAll(() => {
@@ -63,12 +76,12 @@ const LeftSideBar = () => {
 
     const handleCodeChange = code => {
         setFiles(prev => {
-            return prev.map(f => f.id === currentFileID ? { ...f, content: code } : { ...f })
+            return prev.map(f => f.id === currentFileID ? { ...f, content: code, saved: !f.path && !code } : { ...f })
         })
     }
 
     const handleFileChange = id => setCurrentFileID(id);
-    const handleFileClose = id => setFiles(prev => prev.filter(f => f.id !== id));
+    const handleFileClose = id => window.electronAPI.onFileClose(files.find(f => f.id === id));
 
     useEffect(() => {
         if (files.length !== 0 && !files.some(f => f.id === currentFileID))

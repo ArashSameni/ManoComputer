@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain, dialog, shell } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain, dialog, shell, ipcRenderer } = require('electron')
 const path = require('path')
 const fs = require('fs');
 
@@ -20,11 +20,7 @@ function createWindow() {
     }
   })
 
-  ipcMain.on('OPEN_BROWSER', (_, link) => {
-    shell.openExternal(link)
-  })
-
-  ipcMain.on('SAVE_FILE', (_event, file) => {
+  const saveFile = file => {
     fs.writeFile(file.path, file.content, 'utf-8', err => {
       if (err) {
         dialog.showMessageBoxSync(mainWindow, {
@@ -35,18 +31,19 @@ function createWindow() {
         })
         return;
       }
+      mainWindow.webContents.send('FILE_SAVED', file.path)
     });
-  })
+  }
 
-  ipcMain.on('SAVE_AS', (_event, file) => {
+  const saveAs = (file, closeAfter = false) => {
     dialog.showSaveDialog(mainWindow,
       {
-      defaultPath: file.path ?? file.fileName,
-      filters: [
-        { name: 'Assembly', extensions: ['asm', 's'] },
-        { name: 'All Files', extensions: ['*'] }
-      ]
-    })
+        defaultPath: file.path ?? file.fileName,
+        filters: [
+          { name: 'Assembly', extensions: ['asm', 's'] },
+          { name: 'All Files', extensions: ['*'] }
+        ]
+      })
       .then(function (fileObj) {
         if (!fileObj.canceled) {
           fs.writeFile(fileObj.filePath, file.content, 'utf-8', err => {
@@ -59,14 +56,48 @@ function createWindow() {
               })
               return;
             }
-            mainWindow.webContents.send('CHANGE_PATH', fileObj.filePath)
+            if (!closeAfter)
+              mainWindow.webContents.send('CHANGE_PATH', fileObj.filePath)
+            else
+              mainWindow.webContents.send('CLOSE_FILE', file.id);
           });
         }
       })
       .catch(function (err) {
         console.error(err)
       })
+  }
+
+  ipcMain.on('OPEN_BROWSER', (_, link) => {
+    shell.openExternal(link)
   })
+
+  ipcMain.on('FILE_CLOSE', (_, file) => {
+    if (file.saved) {
+      mainWindow.webContents.send('CLOSE_FILE', file.id);
+      return;
+    }
+    let shouldSave = dialog.showMessageBoxSync(mainWindow, {
+      title: "Warning",
+      buttons: ["Don't Save", 'Cancel', 'Save'],
+      defaultId: 2,
+      cancelId: 1,
+      type: 'warning',
+      message: `Do you want to save the changes you made to ${file.name}?`,
+      detail: "Your changes will be lost if you don't save them.",
+    })
+    if (shouldSave === 2 && file.path) {
+      saveFile(file);
+      mainWindow.webContents.send('CLOSE_FILE', file.id);
+    }
+    else if (shouldSave === 2) {
+      saveAs(file, true)
+    }
+  })
+
+  ipcMain.on('SAVE_FILE', (_event, file) => saveFile(file))
+
+  ipcMain.on('SAVE_AS', (_event, file) => saveAs(file))
 
   //load the index.html from a url
   mainWindow.loadURL('http://localhost:3000');
@@ -83,6 +114,7 @@ function createWindow() {
               id: fileID,
               fileName: `Untitled-${untitledNumber}.asm`,
               content: '',
+              saved: true,
               path: null
             }
             fileID += 1;
@@ -96,12 +128,12 @@ function createWindow() {
           click() {
             dialog.showOpenDialog(mainWindow,
               {
-              properties: ['openFile'],
-              filters: [
-                { name: 'Assembly', extensions: ['asm', 's'] },
-                { name: 'All Files', extensions: ['*'] }
-              ]
-            })
+                properties: ['openFile'],
+                filters: [
+                  { name: 'Assembly', extensions: ['asm', 's'] },
+                  { name: 'All Files', extensions: ['*'] }
+                ]
+              })
               .then(function (fileObj) {
                 if (!fileObj.canceled) {
                   fs.readFile(fileObj.filePaths[0], 'utf8', function (err, data) {
@@ -118,6 +150,7 @@ function createWindow() {
                       id: fileID,
                       fileName: fileObj.filePaths[0].split('\\').pop().split('/').pop(),
                       content: data,
+                      saved: true,
                       path: fileObj.filePaths[0]
                     }
                     mainWindow.webContents.send('OPEN_FILE', file)
@@ -157,7 +190,7 @@ function createWindow() {
           label: 'Close File',
           accelerator: 'CmdOrCtrl+W',
           click() {
-            mainWindow.webContents.send('CLOSE_FILE')
+            mainWindow.webContents.send('CLOSE_FILE', -1)
           }
         },
         {

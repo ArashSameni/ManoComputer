@@ -10,7 +10,7 @@ const FilesBar = ({ files, currentFileID, onFileChanged, onFileClosed }) => {
         <div className={styles.container}>
             {files.map(f => (
                 <span key={f.id} onClick={() => onFileChanged(f.id)} className={`${styles.tab} ${f.id === currentFileID && styles.active}`}>
-                    <span>{f.fileName}</span>
+                    <span>{f.fileName}{!f.saved ? '*' : ''}</span>
                     <div onClick={e => handleFileClose(e, f.id)} className={styles.close}>x</div>
                 </span>
             ))}
