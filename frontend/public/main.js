@@ -39,7 +39,8 @@ function createWindow() {
   })
 
   ipcMain.on('SAVE_AS', (_event, file) => {
-    dialog.showSaveDialog({
+    dialog.showSaveDialog(mainWindow,
+      {
       defaultPath: file.path ?? file.fileName,
       filters: [
         { name: 'Assembly', extensions: ['asm', 's'] },
@@ -93,7 +94,8 @@ function createWindow() {
           label: 'Open File...',
           accelerator: 'CmdOrCtrl+O',
           click() {
-            dialog.showOpenDialog({
+            dialog.showOpenDialog(mainWindow,
+              {
               properties: ['openFile'],
               filters: [
                 { name: 'Assembly', extensions: ['asm', 's'] },
