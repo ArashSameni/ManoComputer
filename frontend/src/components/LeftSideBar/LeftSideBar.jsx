@@ -32,6 +32,27 @@ const LeftSideBar = () => {
         setCurrentFileID(file.id)
     })
 
+    window.electronAPI.handleSaveFile(event => {
+        const currentFile = files.find(f => f.id === currentFileID)
+        if (currentFile && currentFile.path)
+            event.sender.send('SAVE_FILE', currentFile)
+        else if (currentFile)
+            event.sender.send('SAVE_AS', currentFile)
+    })
+
+    window.electronAPI.handleSaveAs(event => {
+        const currentFile = files.find(f => f.id === currentFileID)
+        if (currentFile)
+            event.sender.send('SAVE_AS', currentFile)
+    })
+
+    window.electronAPI.handleFilePathChanged((_, newPath) => {
+        const fileName = newPath.split('\\').pop().split('/').pop()
+        setFiles(prev => prev.map(
+            f => f.id === currentFileID ? { ...f, fileName, path: newPath } : f
+        ))
+    })
+
     window.electronAPI.handleCloseFile(() => {
         handleFileClose(currentFileID)
     })

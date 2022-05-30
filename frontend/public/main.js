@@ -12,6 +12,7 @@ function createWindow() {
     height: 640,
     minWidth: 720,
     minHeight: 640,
+    title: 'Mano Computer',
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
@@ -21,6 +22,49 @@ function createWindow() {
 
   ipcMain.on('OPEN_BROWSER', (_, link) => {
     shell.openExternal(link)
+  })
+
+  ipcMain.on('SAVE_FILE', (_event, file) => {
+    fs.writeFile(file.path, file.content, 'utf-8', err => {
+      if (err) {
+        dialog.showMessageBoxSync(mainWindow, {
+          title: "Couldn't save the file",
+          buttons: ['Dismiss'],
+          type: 'warning',
+          message: err.message,
+        })
+        return;
+      }
+    });
+  })
+
+  ipcMain.on('SAVE_AS', (_event, file) => {
+    dialog.showSaveDialog({
+      defaultPath: file.path ?? file.fileName,
+      filters: [
+        { name: 'Assembly', extensions: ['asm', 's'] },
+        { name: 'All Files', extensions: ['*'] }
+      ]
+    })
+      .then(function (fileObj) {
+        if (!fileObj.canceled) {
+          fs.writeFile(fileObj.filePath, file.content, 'utf-8', err => {
+            if (err) {
+              dialog.showMessageBoxSync(mainWindow, {
+                title: "Couldn't save the file",
+                buttons: ['Dismiss'],
+                type: 'warning',
+                message: err.message,
+              })
+              return;
+            }
+            mainWindow.webContents.send('CHANGE_PATH', fileObj.filePath)
+          });
+        }
+      })
+      .catch(function (err) {
+        console.error(err)
+      })
   })
 
   //load the index.html from a url
@@ -88,10 +132,18 @@ function createWindow() {
           type: 'separator'
         },
         {
-          label: 'Save'
+          label: 'Save',
+          accelerator: 'CmdOrCtrl+S',
+          click() {
+            mainWindow.webContents.send('SAVE_FILE')
+          }
         },
         {
-          label: 'Save As...'
+          label: 'Save As...',
+          accelerator: 'CmdOrCtrl+Shift+S',
+          click() {
+            mainWindow.webContents.send('SAVE_AS')
+          }
         },
         {
           label: 'Save All'
