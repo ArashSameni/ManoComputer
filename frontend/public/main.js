@@ -36,7 +36,7 @@ function createWindow() {
   }
 
   const saveAs = (file, closeAfter = false) => {
-    dialog.showSaveDialog(mainWindow,
+    const path = dialog.showSaveDialogSync(mainWindow,
       {
         defaultPath: file.path ?? file.fileName,
         filters: [
@@ -44,28 +44,23 @@ function createWindow() {
           { name: 'All Files', extensions: ['*'] }
         ]
       })
-      .then(function (fileObj) {
-        if (!fileObj.canceled) {
-          fs.writeFile(fileObj.filePath, file.content, 'utf-8', err => {
-            if (err) {
-              dialog.showMessageBoxSync(mainWindow, {
-                title: "Couldn't save the file",
-                buttons: ['Dismiss'],
-                type: 'warning',
-                message: err.message,
-              })
-              return;
-            }
-            if (!closeAfter)
-              mainWindow.webContents.send('CHANGE_PATH', fileObj.filePath)
-            else
-              mainWindow.webContents.send('CLOSE_FILE', file.id);
-          });
+    if (path) {
+      fs.writeFile(path, file.content, 'utf-8', err => {
+        if (err) {
+          dialog.showMessageBoxSync(mainWindow, {
+            title: "Couldn't save the file",
+            buttons: ['Dismiss'],
+            type: 'warning',
+            message: err.message,
+          })
+          return;
         }
-      })
-      .catch(function (err) {
-        console.error(err)
-      })
+        if (!closeAfter)
+          mainWindow.webContents.send('CHANGE_PATH', path)
+        return 1;
+      });
+    }
+    return 0;
   }
 
   ipcMain.on('OPEN_BROWSER', (_, link) => {
@@ -83,7 +78,7 @@ function createWindow() {
       defaultId: 2,
       cancelId: 1,
       type: 'warning',
-      message: `Do you want to save the changes you made to ${file.name}?`,
+      message: `Do you want to save the changes you made to ${file.fileName}?`,
       detail: "Your changes will be lost if you don't save them.",
     })
     if (shouldSave === 2 && file.path) {
@@ -91,8 +86,39 @@ function createWindow() {
       mainWindow.webContents.send('CLOSE_FILE', file.id);
     }
     else if (shouldSave === 2) {
-      saveAs(file, true)
+      if (saveAs(file, true))
+        mainWindow.webContents.send('CLOSE_FILE', file.id);
     }
+  })
+
+  ipcMain.on('ALL_CLOSE', (_, files) => {
+    const newFiles = [];
+    for (const file of files) {
+      if (file.saved) {
+        continue
+      }
+      let shouldSave = dialog.showMessageBoxSync(mainWindow, {
+        title: "Warning",
+        buttons: ["Don't Save", 'Cancel', 'Save'],
+        defaultId: 2,
+        cancelId: 1,
+        type: 'warning',
+        message: `Do you want to save the changes you made to ${file.fileName}?`,
+        detail: "Your changes will be lost if you don't save them.",
+      })
+      if (shouldSave === 1) {
+        newFiles.push(file);
+        continue;
+      }
+      if (shouldSave === 2 && file.path) {
+        saveFile(file);
+        continue;
+      }
+      if (shouldSave === 2 && saveAs(file, true)) {
+        newFiles.push({ ...file, saved: true })
+      }
+    }
+    mainWindow.webContents.send('CHANGE_FILES', newFiles);
   })
 
   ipcMain.on('SAVE_FILE', (_event, file) => saveFile(file))

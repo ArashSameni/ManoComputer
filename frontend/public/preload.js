@@ -30,9 +30,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
         ipcRenderer.removeAllListeners('CHANGE_PATH')
         ipcRenderer.on('CHANGE_PATH', callback)
     },
+    onChangeFiles: callback => {
+        ipcRenderer.removeAllListeners('CHANGE_FILES')
+        ipcRenderer.on('CHANGE_FILES', callback)
+    },
     onFileSaved: callback => {
         ipcRenderer.removeAllListeners('FILE_SAVED')
         ipcRenderer.on('FILE_SAVED', callback)
     },
-    onFileClose: file => ipcRenderer.send('FILE_CLOSE', file)
+    onFileClose: file => ipcRenderer.send('FILE_CLOSE', file),
+    onAllClose: files => ipcRenderer.send('ALL_CLOSE', files),
 })

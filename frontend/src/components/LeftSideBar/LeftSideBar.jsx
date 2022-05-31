@@ -60,6 +60,8 @@ const LeftSideBar = () => {
         ))
     })
 
+    window.electronAPI.onChangeFiles((_, newFiles) => setFiles(newFiles))
+
     window.electronAPI.handleCloseFile((_, id) => {
         if(id === -1)
         {
@@ -70,9 +72,7 @@ const LeftSideBar = () => {
         setFiles(prev => prev.filter(f => f.id !== id))
     })
 
-    window.electronAPI.handleCloseAll(() => {
-        setFiles([])
-    })
+    window.electronAPI.handleCloseAll(() => window.electronAPI.onAllClose(files))
 
     const handleCodeChange = code => {
         setFiles(prev => {
