@@ -1,7 +1,7 @@
 class Register:
     def __init__(self, size) -> None:
         self.size = size
-        self.data = [0 for _ in range(size)]
+        self.data = [0] * size
 
     def __getitem__(self, item):
         return self.data[item]

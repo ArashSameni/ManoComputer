@@ -10,7 +10,7 @@ class Assembler:
     regex = re.compile(
         "([\\w\\d]{0,3}(?=,))?,?[^\\S\\r\\n]?(\\w{3})[^\\S\\r\\n]?([-\\w\\d]+)?[^\\S\\r\\n]?(I)?")
     pseudo_instructions = ['ORG', 'END', 'DEC', 'HEX']
-    memory_refrence_instructions = {
+    memory_reference_instructions = {
         'AND': '000',
         'ADD': '001',
         'LDA': '010',
@@ -19,7 +19,7 @@ class Assembler:
         'BSA': '101',
         'ISZ': '110',
     }
-    non_memory_refrence_instructions = {
+    non_memory_reference_instructions = {
         'CLA': '7800',
         'CLE': '7400',
         'CMA': '7200',
@@ -47,7 +47,7 @@ class Assembler:
 
     def assemble(self) -> None:
         self.first_pass()
-        self.scond_pass()
+        self.second_pass()
         self.save_binary()
 
     def first_pass(self) -> None:
@@ -64,7 +64,7 @@ class Assembler:
                     break
                 line_counter += 1
 
-    def scond_pass(self) -> None:
+    def second_pass(self) -> None:
         line_counter = 0
         for line in self.code:
             match = self.regex.match(line)
@@ -79,12 +79,12 @@ class Assembler:
                         self.data[line_counter] = bytearray.fromhex(int2hex(int(match[3]),16)[2:].zfill(4))
                     elif match[2] == 'HEX':
                         self.data[line_counter] = bytearray.fromhex(match[3].zfill(2))
-                if match[2] in self.non_memory_refrence_instructions:
-                    instruction = self.non_memory_refrence_instructions[match[2]]
+                if match[2] in self.non_memory_reference_instructions:
+                    instruction = self.non_memory_reference_instructions[match[2]]
                     self.data[line_counter] = bytearray.fromhex(instruction)
-                if match[2] in self.memory_refrence_instructions:
+                if match[2] in self.memory_reference_instructions:
                     address = format(self.symbol_table[match[3]], 'b').zfill(12)
-                    opcode = self.memory_refrence_instructions[match[2]]
+                    opcode = self.memory_reference_instructions[match[2]]
                     instruction = opcode+address
                     if match[4]:
                         instruction = '1' + instruction
