@@ -16,6 +16,8 @@ class Register:
 
     def __imatmul__(self, value):
         value = int(value,16)
+        if value >= 2**(self.size-1):
+            value -= 2**self.size
         self.set_value(value)
         return self
 
@@ -24,23 +26,28 @@ class Register:
         self.set_value(value)
         return self
         
-    def set_value(self,value):
-        if -32768<=value<=32767:
-            if value<0:
+    def set_value(self, value):
+        if -32768 <= value <= 32767:
+            if value < 0:
                 self.data = list(
-                    map(int, list(bin(-value))[2:].zfill(self.size)))[-self.size:]
-                self.complement()
-                self.increment()
+                    map(int, list(bin(value&(2**self.size - 1))[2:])))[-self.size:]
             else:
                 self.data = list(
-                        map(int, list(bin(value))[2:].zfill(self.size)))[-self.size:]   
+                    map(int, list(bin(value)[2:].zfill(self.size))))[-self.size:]
+
     def __int__(self):
         result = 0
-        for bit in self.data[1:].reverse():
+        for bit in self.data[1:]:
             result = (result << 1) | bit
         if self.data[0]:
             result-=32768
         return result
+
+    def hex(self):
+        result = 0
+        for bit in self.data:
+            result = (result << 1) | bit
+        return hex(result)
 
     def __iand__(self, other):
         for i in range(self.size):
