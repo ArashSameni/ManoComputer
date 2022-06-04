@@ -1,6 +1,6 @@
-from .register import Register
-from .ram import Ram
-from .conditions import conditions
+from register import Register
+from ram import Ram
+from conditions import conditions
 
 
 class Computer:
@@ -25,12 +25,13 @@ class Computer:
         self.r = False
         self.p = False
         self.conditions = conditions
+        self.last_instructions = []
 
     def T(self, step):
         return self.SC == step
 
     def D(self, number):
-        return self.decode(self.IR[12:15]) == number
+        return self.decode(self.IR[1:4]) == number
 
     def decode(self, bit_list):
         result = 0
@@ -42,20 +43,52 @@ class Computer:
         if not self.FGO:
             self.FGO = True
             return self.OUTR.data
-        return None
+        return False
 
     def input_data(self,data):
         if not self.FGI:
             self.FGI = True
             self.INPR.data = data
+            return True
+        return False
 
     def clock(self):
+        self.last_instructions = []
         if(self.S):
             for condition, actions in self.conditions.items():
                 if eval(condition, {"Computer": self}):
                     for action in actions:
                         exec(action, {"Computer": self})
             self.SC += 1
+            self.r = False
+            self.p = False
+
     def start(self):
         self.PC @= "100"
         self.S = True
+    
+    def json(self):
+        return {
+            'ram': self.Memory.json(),
+            'DR': self.DR.hex(),
+            'AR': self.AR.hex(),
+            'AC': self.AC.hex(),
+            'IR': self.IR.hex(),
+            'PC': self.PC.hex(),
+            'TR': self.TR.hex(),
+            'INPR': self.INPR.hex(),
+            'OUTR': self.OUTR.hex(),
+            'SC': self.SC,
+            'I': int(self.I),
+            'S': int(self.S),
+            'E': int(self.E),
+            'R': int(self.R),
+            'IEN': int(self.IEN),
+            'FGI': int(self.FGI),
+            'FGO': int(self.FGO),
+            'last_instructions': self.last_instructions
+        }
+
+c = Computer()
+c.Memory.load_bin('cart.bin')
+c.start()
