@@ -1,9 +1,9 @@
 import styles from './AssembleButton.module.css';
 import icon from '../../../../assets/assemble-white.png';
 
-const AssembleButton = () => {
+const AssembleButton = props => {
     return (
-        <img src={icon} alt='Assemble' className={styles.button} />
+        <img src={icon} alt='Assemble' className={styles.button} {...props} />
     )
 };
 

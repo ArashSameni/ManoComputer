@@ -1,31 +1,33 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Ram from "./Ram";
+import ComputerContext from "../../../contexts/ComputerContext";
 import styles from './Simulator.module.css';
-
-const registers = [
-    { name: 'SC', value: 1 },
-    { name: 'PC', value: 100 },
-    { name: 'AR', value: 103 },
-    { name: 'IR', value: 0 },
-    { name: 'DR', value: 0 },
-    { name: 'AC', value: 0 },
-    { name: 'TR', value: 0 },
-    { name: 'INPR', value: 0 },
-    { name: 'OUTR', value: 0 },
-]
-
-const flags = [
-    { name: 'I', value: 1 },
-    { name: 'S', value: 0 },
-    { name: 'E', value: 0 },
-    { name: 'R', value: 0 },
-    { name: 'IEN', value: 0 },
-    { name: 'FGI', value: 0 },
-    { name: 'FGO', value: 0 },
-]
 
 const Simulator = () => {
     const [clockRate, setClockRate] = useState(1);
+    const { computer } = useContext(ComputerContext);
+
+    const registers = [
+        { name: 'SC', value: computer.SC },
+        { name: 'PC', value: computer.PC },
+        { name: 'AR', value: computer.AR },
+        { name: 'IR', value: computer.IR },
+        { name: 'DR', value: computer.DR },
+        { name: 'AC', value: computer.AC },
+        { name: 'TR', value: computer.TR },
+        { name: 'INPR', value: computer.INPR },
+        { name: 'OUTR', value: computer.OUTR },
+    ]
+    
+    const flags = [
+        { name: 'I', value: computer.I },
+        { name: 'S', value: computer.S },
+        { name: 'E', value: computer.E },
+        { name: 'R', value: computer.R },
+        { name: 'IEN', value: computer.IEN },
+        { name: 'FGI', value: computer.FGI },
+        { name: 'FGO', value: computer.FGO },
+    ]
 
     return (
         <>

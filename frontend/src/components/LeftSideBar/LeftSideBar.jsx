@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import ComputerContext from '../../contexts/ComputerContext'
 import FilesBar from './FilesBar';
 import CodeEditor from './CodeEditor';
 import StatusBar from './StatusBar';
@@ -14,6 +15,8 @@ const LeftSideBar = () => {
         path: null
     }]);
     const [currentFileID, setCurrentFileID] = useState(0);
+    const currentFile = files.find(f => f.id === currentFileID);
+    const { setComputer } = useContext(ComputerContext);
 
     window.electronAPI.handleOpenFile((_, file) => {
         setFiles(prev => {
@@ -34,7 +37,6 @@ const LeftSideBar = () => {
     })
 
     window.electronAPI.handleSaveFile(event => {
-        const currentFile = files.find(f => f.id === currentFileID)
         if (currentFile && currentFile.path)
             event.sender.send('SAVE_FILE', currentFile)
         else if (currentFile)
@@ -42,7 +44,6 @@ const LeftSideBar = () => {
     })
 
     window.electronAPI.handleSaveAs(event => {
-        const currentFile = files.find(f => f.id === currentFileID)
         if (currentFile)
             event.sender.send('SAVE_AS', currentFile)
     })
@@ -63,9 +64,8 @@ const LeftSideBar = () => {
     window.electronAPI.onChangeFiles((_, newFiles) => setFiles(newFiles))
 
     window.electronAPI.handleCloseFile((_, id) => {
-        if(id === -1)
-        {
-            if(files.length)
+        if (id === -1) {
+            if (files.length)
                 handleFileClose(currentFileID);
             return;
         }
@@ -91,12 +91,25 @@ const LeftSideBar = () => {
             })
     }, [files, currentFileID])
 
+    const handleAssemble = () => {
+        fetch(process.env.REACT_APP_API + 'load', {
+            method: 'POST',
+            body: JSON.stringify({ code: currentFile.content.split('\n') })
+        })
+            .then(response => response.json())
+            .then(data => {
+                setComputer(data);
+                alert("Assemble successful")
+            })
+            .catch(e => alert('Error: ' + e))
+    }
+
     return (
         <div className={styles.LeftSideBar}>
             <FilesBar files={files} currentFileID={currentFileID} onFileChanged={handleFileChange} onFileClosed={handleFileClose} />
-            {files.length > 0 && <CodeEditor readOnly={files.length === 0} code={files.find(f => f.id === currentFileID)?.content || ''} onCodeChanged={handleCodeChange} />}
+            {files.length > 0 && <CodeEditor readOnly={files.length === 0} code={currentFile?.content || ''} onCodeChanged={handleCodeChange} />}
             {files.length === 0 && <AboutUs />}
-            <StatusBar />
+            {files.length > 0 && <StatusBar onAssemble={handleAssemble} />}
         </div>
     );
 };

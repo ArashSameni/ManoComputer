@@ -1,27 +1,27 @@
+import { useContext } from 'react';
 import styles from './Ram.module.css';
+import ComputerContext from "../../../../contexts/ComputerContext";
 
 const Ram = () => {
-    const rows = [];
-    for (let i = 0; i < 50; i++)
-        rows.push({ Label: (i * i).toString(), Address: i, Instruction: 'DEC ' + i.toString() })
+    const { computer: { ram } } = useContext(ComputerContext);
 
     return (
         <div className={styles.container}>
             <header>
-                <span>Address</span>
                 <span>Label</span>
+                <span>Address</span>
                 <span>Instruction</span>
                 <span>HEX</span>
             </header>
             <div className={styles.content}>
                 <table>
                     <tbody>
-                        {rows.map(r =>
+                        {ram.map(r =>
                             <tr>
-                                <td>{r.Label}</td>
-                                <td>{r.Address}</td>
-                                <td>{r.Instruction}</td>
-                                <td>0</td>
+                                <td>{r.label}</td>
+                                <td>0x{String(r.address).padStart(3, '0').toUpperCase()}</td>
+                                <td>{r.instruction}</td>
+                                <td>{r.value}</td>
                             </tr>
                         )}
                     </tbody>

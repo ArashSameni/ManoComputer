@@ -89,6 +89,8 @@ function createWindow() {
       if (saveAs(file, true))
         mainWindow.webContents.send('CLOSE_FILE', file.id);
     }
+    else if (shouldSave === 0)
+      mainWindow.webContents.send('CLOSE_FILE', file.id);
   })
 
   ipcMain.on('ALL_CLOSE', (_, files) => {

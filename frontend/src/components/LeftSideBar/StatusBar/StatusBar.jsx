@@ -2,11 +2,11 @@ import styles from './StatusBar.module.css';
 import ToggleButton from "./ToggleButton";
 import AssembleButton from "./AssembleButton";
 
-const StatusBar = () => {
+const StatusBar = ({onAssemble}) => {
     return (
         <div className={styles.container}>
             <ToggleButton />
-            <AssembleButton />
+            <AssembleButton onClick={onAssemble} />
         </div>
     )
 }
