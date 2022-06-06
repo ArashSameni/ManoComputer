@@ -17,8 +17,11 @@ def clock():
 
 @app.route('/load', methods=['POST'])
 def load_code():
-    code = json.loads(request.data)['code']
-    assembler = Assembler(code)
+    try:
+        code = json.loads(request.data)['code']
+        assembler = Assembler(code)
+    except:
+        return jsonify({})
     try:
         assembler.assemble()
         c.reset_memory()
@@ -40,8 +43,11 @@ def reset():
 
 @app.route('/input', methods=['POST'])
 def input():
-    data = json.loads(request.data)['input'][0]
-    return jsonify(c.input_data(data))
+    try:
+        data = json.loads(request.data)['input'][0]
+        return jsonify(c.input_data(data))
+    except:
+        return jsonify({})
 
 
 @app.route('/output', methods=['GET'])
@@ -54,9 +60,12 @@ def output():
 
 @app.route('/start', methods=['POST'])
 def start():
-    request_data = json.loads(request.data)
-    if location := request_data.get('location', None):
-        c.start_location = location
+    try:
+        request_data = json.loads(request.data)
+        if location := request_data.get('location', None):
+            c.start_location = location
+    except:
+        pass
     c.start()
     return jsonify(c.json())
 
