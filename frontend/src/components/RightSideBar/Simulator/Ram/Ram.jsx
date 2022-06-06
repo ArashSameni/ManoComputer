@@ -1,9 +1,13 @@
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import styles from './Ram.module.css';
 import ComputerContext from "../../../../contexts/ComputerContext";
 
 const Ram = () => {
-    const { computer: { ram } } = useContext(ComputerContext);
+    const { computer } = useContext(ComputerContext);
+    const ramTableRef = useRef();
+
+    if (ramTableRef.current && ramTableRef.current.rows.length && computer.initial && computer.start_location > 0)
+        ramTableRef.current.rows[computer.start_location - 1].scrollIntoView({});
 
     return (
         <div className={styles.container}>
@@ -14,10 +18,10 @@ const Ram = () => {
                 <span>HEX</span>
             </header>
             <div className={styles.content}>
-                <table>
+                <table ref={ramTableRef}>
                     <tbody>
-                        {ram.map(r =>
-                            <tr>
+                        {computer.ram.map(r =>
+                            <tr key={r.address}>
                                 <td>{r.label}</td>
                                 <td>0x{String(r.address).padStart(3, '0').toUpperCase()}</td>
                                 <td>{r.instruction}</td>

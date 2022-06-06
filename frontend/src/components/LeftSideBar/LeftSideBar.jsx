@@ -98,7 +98,7 @@ const LeftSideBar = () => {
         })
             .then(response => response.json())
             .then(data => {
-                setComputer(data);
+                setComputer({...data, initial: true});
                 alert("Assemble successful")
             })
             .catch(e => alert('Error: ' + e))

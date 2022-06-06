@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain, dialog, shell, ipcRenderer } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain, dialog, shell } = require('electron')
 const path = require('path')
 const fs = require('fs');
 
@@ -9,9 +9,9 @@ function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
-    height: 640,
+    height: 690,
     minWidth: 720,
-    minHeight: 640,
+    minHeight: 690,
     title: 'Mano Computer',
     webPreferences: {
       nodeIntegration: true,

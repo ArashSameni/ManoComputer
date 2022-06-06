@@ -23,6 +23,14 @@
   text-align: center;
 }
 
+.description.micro .value::after {
+  content: ",";
+}
+
+.description.micro .value:last-of-type:after {
+  content: none;
+}
+
 .registers {
   margin-top: 18px;
   font-size: 17px;

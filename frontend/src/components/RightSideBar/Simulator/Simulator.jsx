@@ -29,12 +29,10 @@ const Simulator = () => {
         { name: 'FGO', value: computer.FGO },
     ]
 
-    const handleStepClick = async () => {
-        if (!computer.S)
-            await fetch(process.env.REACT_APP_API + 'start', { method: 'POST' })
-        const resp = await fetch(process.env.REACT_APP_API + 'clock')
-        const data = await resp.json()
-        setComputer(data)
+    const handleStepClick = () => {
+        fetch(process.env.REACT_APP_API + 'clock')
+            .then(resp => resp.json())
+            .then(data => setComputer(data))
     };
 
     return (
@@ -42,8 +40,8 @@ const Simulator = () => {
             <div className={styles.container}>
                 <div>
                     <p className={`${styles.description} ${styles.micro}`}>
-                        MicroOperation:
-                        <label className={styles.value}>{computer.last_instructions.slice(-1)[0]}</label>
+                        MicroOperations:
+                        {computer.last_instructions.map(i => <label className={styles.value}>{i}</label>)}
                     </p>
                     <div className={styles.registers}>
                         {registers.map(reg => (
@@ -73,7 +71,7 @@ const Simulator = () => {
                     </div>
                 </div>
             </div>
-            <Ram />
+            <Ram scrollTo={0} />
         </>
     );
 }
