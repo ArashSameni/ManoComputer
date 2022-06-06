@@ -42,13 +42,13 @@ class Computer:
     def output_data(self):
         if not self.FGO:
             self.FGO = True
-            return self.OUTR.data
+            return chr(int(self.OUTR))
         return False
 
     def input_data(self,data):
         if not self.FGI:
             self.FGI = True
-            self.INPR.data = data
+            self.INPR %= ord(data)
             return True
         return False
 
