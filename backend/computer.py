@@ -64,6 +64,9 @@ class Computer:
             self.r = False
             self.p = False
 
+    def reset_memory(self):
+        self.Memory = Ram()
+
     def start(self):
         self.PC @= self.start_location
         self.DR.reset()

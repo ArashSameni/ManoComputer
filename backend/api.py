@@ -21,6 +21,7 @@ def load_code():
     assembler = Assembler(code)
     try:
         assembler.assemble()
+        c.reset_memory()
         c.Memory.load_bytearray(b''.join(assembler.data))
         c.Memory.load_label_table(assembler.label_table)
         c.Memory.load_instruction_table(assembler.instruction_table)
