@@ -86,7 +86,7 @@ class Assembler:
                     elif match[2] == 'DEC':
                         self.data[line_counter] = bytearray.fromhex(int2hex(int(match[3]),16)[2:].zfill(4))
                     elif match[2] == 'HEX':
-                        self.data[line_counter] = bytearray.fromhex(match[3].zfill(2))
+                        self.data[line_counter] = bytearray.fromhex(match[3].zfill(4))
                 if match[2] in self.non_memory_reference_instructions:
                     instruction = self.non_memory_reference_instructions[match[2]]
                     self.data[line_counter] = bytearray.fromhex(instruction)
@@ -99,7 +99,7 @@ class Assembler:
                     else:
                         instruction = '0' + instruction
                     self.data[line_counter] = bytearray.fromhex(
-                        int2hex(int(instruction, 2),16)[2:])
+                        int2hex(int(instruction, 2),16)[2:].zfill(4))
                 line_counter += 1
 
     def save_binary(self) -> None:
@@ -107,10 +107,3 @@ class Assembler:
         with open('cart.bin', 'wb') as cart:
             cart.write(data)
 
-
-code: List[str] = []
-with open('code.asm') as code_file:
-    while line := code_file.readline():
-        code.append(line.rstrip())
-a = Assembler(code)
-a.assemble()
