@@ -5,7 +5,7 @@ import styles from './Simulator.module.css';
 
 const Simulator = () => {
     const [clockRate, setClockRate] = useState(1);
-    const { computer } = useContext(ComputerContext);
+    const { computer, setComputer } = useContext(ComputerContext);
 
     const registers = [
         { name: 'SC', value: computer.SC },
@@ -18,7 +18,7 @@ const Simulator = () => {
         { name: 'INPR', value: computer.INPR },
         { name: 'OUTR', value: computer.OUTR },
     ]
-    
+
     const flags = [
         { name: 'I', value: computer.I },
         { name: 'S', value: computer.S },
@@ -29,13 +29,21 @@ const Simulator = () => {
         { name: 'FGO', value: computer.FGO },
     ]
 
+    const handleStepClick = async () => {
+        if (!computer.S)
+            await fetch(process.env.REACT_APP_API + 'start', { method: 'POST' })
+        const resp = await fetch(process.env.REACT_APP_API + 'clock')
+        const data = await resp.json()
+        setComputer(data)
+    };
+
     return (
         <>
             <div className={styles.container}>
                 <div>
                     <p className={`${styles.description} ${styles.micro}`}>
                         MicroOperation:
-                        <label className={styles.value}>AR &lt;- PC</label>
+                        <label className={styles.value}>{computer.last_instructions.slice(-1)[0]}</label>
                     </p>
                     <div className={styles.registers}>
                         {registers.map(reg => (
@@ -60,7 +68,7 @@ const Simulator = () => {
                     </div>
                     <div className={styles.buttons}>
                         <button>RUN</button>
-                        <button>STEP</button>
+                        <button onClick={handleStepClick}>STEP</button>
                         <button>RESET</button>
                     </div>
                 </div>

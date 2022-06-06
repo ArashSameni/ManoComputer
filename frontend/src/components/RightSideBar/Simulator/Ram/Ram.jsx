@@ -21,7 +21,7 @@ const Ram = () => {
                                 <td>{r.label}</td>
                                 <td>0x{String(r.address).padStart(3, '0').toUpperCase()}</td>
                                 <td>{r.instruction}</td>
-                                <td>{r.value}</td>
+                                <td>0x{r.value.replace('0x', '').padStart(4, '0').toUpperCase()}</td>
                             </tr>
                         )}
                     </tbody>
