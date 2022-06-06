@@ -1,7 +1,7 @@
 import json
 from flask import Flask, jsonify, request
-from computer import Computer
-from assembler import Assembler
+from .computer import Computer
+from .assembler import Assembler
 
 app = Flask(__name__)
 c = Computer()
@@ -20,9 +20,9 @@ def load_code():
         c.Memory.load_bytearray(b''.join(assembler.data))
         c.Memory.load_label_table(assembler.label_table)
         c.Memory.load_instruction_table(assembler.instruction_table)
-        return jsonify(c.Memory.json())
+        return jsonify(c.json())
     except SyntaxError as error:
-        return jsonify(str(error))
+        return jsonify({"parse_error":str(error)})
 
 @app.route('/reset', methods=['POST'])
 def reset():
@@ -31,16 +31,23 @@ def reset():
 
 @app.route('/input', methods=['POST'])
 def input():
-    data = json.loads(request.data)['input']
+    data = json.loads(request.data)['input'][0]
     return jsonify(c.input_data(data))
 
 @app.route('/output', methods=['GET'])
 def output():
-    return jsonify(c.output_data())
+    if output := c.output_data():
+        return jsonify({"output":output})
+    else:
+        return jsonify(False)
 
 @app.route('/start', methods=['POST'])
 def start():
-    c.start()
+    try:
+        location = json.loads(request.data)['location']
+    except:
+        location = "100"
+    c.start(location)
     return jsonify(c.json())
 
 app.run()
