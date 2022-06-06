@@ -103,6 +103,6 @@ class Computer:
             'IEN': int(self.IEN),
             'FGI': int(self.FGI),
             'FGO': int(self.FGO),
-            'start_location': self.start_location,
+            'start_location': int(self.start_location,16),
             'last_instructions': self.last_instructions
         }
