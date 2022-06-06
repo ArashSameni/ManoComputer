@@ -45,6 +45,7 @@ class Assembler:
         self.symbol_table: Dict[str, int] = {}
         self.instruction_table = {}
         self.label_table = {}
+        self.start_location = "100"
         self.data: List[bytearray] = [bytearray(2) for _ in range(2048)]
 
     def assemble(self) -> None:
@@ -54,6 +55,9 @@ class Assembler:
     def first_pass(self) -> None:
         line_counter = 0
         file_line = 0
+        first_line = self.regex.match(self.code[0])
+        if first_line[2] == 'ORG':
+            self.start_location = first_line[3]
         for line in self.code:
             match = self.regex.match(line)
             file_line += 1

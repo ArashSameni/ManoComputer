@@ -25,6 +25,7 @@ class Computer:
         self.r = False
         self.p = False
         self.conditions = conditions
+        self.start_location = "100"
         self.last_instructions = []
 
     def T(self, step):
@@ -63,10 +64,26 @@ class Computer:
             self.r = False
             self.p = False
 
-    def start(self,location="100"):
-        self.PC @= location
+    def start(self):
+        self.PC @= self.start_location
+        self.DR.reset()
+        self.AR.reset()
+        self.AC.reset()
+        self.IR.reset()
+        self.TR.reset()
+        self.INPR.reset()
+        self.OUTR.reset()
+        self.SC = 0
+        self.I = False
         self.S = True
-    
+        self.E = False
+        self.R = False
+        self.IEN = False
+        self.FGI = False
+        self.FGO = True
+        self.r = False
+        self.p = False
+
     def json(self):
         return {
             'ram': self.Memory.json(),
@@ -86,5 +103,6 @@ class Computer:
             'IEN': int(self.IEN),
             'FGI': int(self.FGI),
             'FGO': int(self.FGO),
+            'start_location': self.start_location,
             'last_instructions': self.last_instructions
         }
