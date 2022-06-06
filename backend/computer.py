@@ -1,6 +1,6 @@
-from register import Register
-from ram import Ram
-from conditions import conditions
+from .register import Register
+from .ram import Ram
+from .conditions import conditions
 
 
 class Computer:
@@ -63,8 +63,8 @@ class Computer:
             self.r = False
             self.p = False
 
-    def start(self):
-        self.PC @= "100"
+    def start(self,location="100"):
+        self.PC @= location
         self.S = True
     
     def json(self):
@@ -88,7 +88,3 @@ class Computer:
             'FGO': int(self.FGO),
             'last_instructions': self.last_instructions
         }
-
-c = Computer()
-c.Memory.load_bin('cart.bin')
-c.start()
