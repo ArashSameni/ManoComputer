@@ -10,8 +10,7 @@ class Register:
         self.data[item] = value
 
     def __ilshift__(self, other):
-        for i in range(self.size):
-            self.data[i] = other.data[i]
+        self.set_value(int(other))
         return self
 
     def __imatmul__(self, value):

@@ -13,8 +13,7 @@ class Word:
         self.data[item] = value
 
     def __ilshift__(self, other):
-        for i in range(self.size):
-            self.data[i] = other.data[i]
+        self.set_value(int(other))
         self.instruction = ""
         return self
 
@@ -52,13 +51,6 @@ class Word:
         for bit in self.data:
             result = (result << 1) | bit
         return hex(result)
-
-    def increment(self):
-        self %= int(self)+1
-
-    def complement(self):
-        for i in range(self.size):
-            self.data[i] = int(not self.data[i])
 
 
 class Ram:
