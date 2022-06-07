@@ -37,6 +37,7 @@ def load_code():
 
 @app.route('/reset', methods=['POST'])
 def reset():
+    global c
     c = Computer()
     return jsonify(c.json())
 
