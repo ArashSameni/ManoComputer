@@ -4,6 +4,7 @@ import ComputerContext from "../../../contexts/ComputerContext";
 import styles from './Simulator.module.css';
 
 const Simulator = () => {
+    const [running, setRunning] = useState(false);
     const [clockRate, setClockRate] = useState(1);
     const { computer, setComputer } = useContext(ComputerContext);
 
@@ -29,11 +30,41 @@ const Simulator = () => {
         { name: 'FGO', value: computer.FGO },
     ]
 
+    const handleRunClick = async () => {
+        if (running === false) {
+            if (!computer.S)
+                await fetch(process.env.REACT_APP_API + 'start', { method: 'POST' })
+            const intervalId = window.setInterval(function () {
+                fetch(process.env.REACT_APP_API + 'clock')
+                    .then(resp => resp.json())
+                    .then(data => {
+                        setComputer(data);
+                        if (!data.S) {
+                            setRunning(false);
+                            clearInterval(intervalId);
+                        }
+                    })
+            }, 500 / clockRate);
+            setRunning(intervalId);
+        }
+        else {
+            setRunning(false);
+            clearInterval(running);
+        }
+    }
+
     const handleStepClick = () => {
-        fetch(process.env.REACT_APP_API + 'clock')
+        if (!running)
+            fetch(process.env.REACT_APP_API + 'clock')
+                .then(resp => resp.json())
+                .then(data => setComputer(data))
+    };
+
+    const handleResetClick = () => {
+        fetch(process.env.REACT_APP_API + 'start', { method: 'POST' })
             .then(resp => resp.json())
             .then(data => setComputer(data))
-    };
+    }
 
     return (
         <>
@@ -65,13 +96,13 @@ const Simulator = () => {
                         <label>{clockRate}</label>
                     </div>
                     <div className={styles.buttons}>
-                        <button>RUN</button>
+                        <button onClick={handleRunClick}>{!running ? "RUN" : "STOP"}</button>
                         <button onClick={handleStepClick}>STEP</button>
-                        <button>RESET</button>
+                        <button onClick={handleResetClick}>RESET</button>
                     </div>
                 </div>
             </div>
-            <Ram scrollTo={0} />
+            <Ram />
         </>
     );
 }

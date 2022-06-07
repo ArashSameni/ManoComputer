@@ -1,8 +1,8 @@
-import { useContext, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import styles from './Ram.module.css';
 import ComputerContext from "../../../../contexts/ComputerContext";
 
-const Ram = () => {
+const Ram = React.memo(() => {
     const { computer } = useContext(ComputerContext);
     const ramTableRef = useRef();
 
@@ -33,6 +33,6 @@ const Ram = () => {
             </div>
         </div>
     );
-}
+})
 
 export default Ram;
