@@ -69,6 +69,7 @@ class Computer:
 
     def start(self):
         self.PC @= self.start_location
+        self.last_instructions = []
         self.DR.reset()
         self.AR.reset()
         self.AC.reset()
