@@ -47,11 +47,13 @@ class Computer:
         return False
 
     def input_data(self,data):
-        if not self.FGI:
+        if data:
             self.FGI = True
-            self.INPR %= ord(data)
-            return True
-        return False
+            self.INPR %= ord(data[0])
+        else:
+            self.FGI = False
+            self.INPR.reset()
+        return self.INPR.hex()
 
     def clock(self):
         self.last_instructions = []
