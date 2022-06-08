@@ -9,6 +9,10 @@ const Simulator = () => {
     const { computer, setComputer } = useContext(ComputerContext);
     const [inputChar, setInputChar] = useState('');
 
+    let INP = computer.INPR;
+    INP += INP !== '0x0' ? ' - ' + String.fromCharCode(INP) : '';
+    let OUT = computer.OUTR;
+    OUT += OUT !== '0x0' ? ' - ' + String.fromCharCode(OUT) : '';
     const registers = [
         { name: 'SC', value: computer.SC },
         { name: 'PC', value: computer.PC },
@@ -17,8 +21,8 @@ const Simulator = () => {
         { name: 'DR', value: computer.DR },
         { name: 'AC', value: computer.AC },
         { name: 'TR', value: computer.TR },
-        { name: 'INPR', value: computer.INPR },
-        { name: 'OUTR', value: computer.OUTR },
+        { name: 'INPR', value: INP },
+        { name: 'OUTR', value: OUT },
     ]
 
     const flags = [
