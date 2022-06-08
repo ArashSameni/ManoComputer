@@ -1,6 +1,6 @@
 .container {
   padding: 20px;
-  height: calc(100% - 300px - 3rem);
+  height: calc(100% - 300px);
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import Ram from "./Ram";
-import ComputerContext from "../../../contexts/ComputerContext";
+import ComputerContext from "../../contexts/ComputerContext";
 import styles from './Simulator.module.css';
 
 const Simulator = () => {

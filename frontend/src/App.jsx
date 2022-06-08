@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './App.module.css';
-import RightSideBar from './components/RightSideBar';
+import Simulator from './components/Simulator';
 import LeftSideBar from './components/LeftSideBar';
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
@@ -13,7 +13,7 @@ function App() {
           <LeftSideBar />
         </Allotment.Pane>
         <Allotment.Pane minSize={370}>
-          <RightSideBar />
+          <Simulator />
         </Allotment.Pane>
       </Allotment>
     </div>
