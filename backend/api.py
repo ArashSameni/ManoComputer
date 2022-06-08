@@ -31,8 +31,8 @@ def load_code():
         c.start_location = assembler.start_location
         c.start()
         return jsonify(c.json())
-    except SyntaxError as error:
-        return jsonify({"parse_error": str(error)})
+    except Exception as error:
+        return jsonify({"parse_error": str(error)}), 500
 
 
 @app.route('/reset', methods=['POST'])

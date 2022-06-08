@@ -98,6 +98,10 @@ const LeftSideBar = () => {
         })
             .then(response => response.json())
             .then(data => {
+                if ("parse_error" in data) {
+                    alert('Error: ' + data.parse_error)
+                    return
+                }
                 setComputer({...data, initial: true});
                 alert("Assemble successful")
             })
