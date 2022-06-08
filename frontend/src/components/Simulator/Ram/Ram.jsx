@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import styles from './Ram.module.css';
-import ComputerContext from "../../../../contexts/ComputerContext";
+import ComputerContext from "../../../contexts/ComputerContext";
 
 const Ram = React.memo(() => {
     const { computer } = useContext(ComputerContext);

@@ -1,6 +1,6 @@
 .container {
   padding: 20px;
-  height: calc(100% - 300px - 3rem);
+  height: calc(100% - 300px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -154,4 +154,18 @@
   border-radius: 3px;
   background: #380a8e;
   padding: 5px 10px;
+}
+
+.IOContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.IOContainer input {
+  outline: none;
+  margin-top: 5px;
+  margin-left: 10px;
+  padding: 8px 10px;
+  font-size: 15px;
 }

@@ -44,11 +44,8 @@ def reset():
 
 @app.route('/input', methods=['POST'])
 def input():
-    try:
-        data = json.loads(request.data)['input'][0]
-        return jsonify(c.input_data(data))
-    except:
-        return jsonify({})
+    data = json.loads(request.data)['input']
+    return jsonify(c.input_data(data))
 
 
 @app.route('/output', methods=['GET'])

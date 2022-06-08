@@ -10,7 +10,7 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 690,
-    minWidth: 720,
+    minWidth: 750,
     minHeight: 690,
     title: 'Mano Computer',
     webPreferences: {
