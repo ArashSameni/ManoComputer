@@ -7,6 +7,7 @@ const Simulator = () => {
     const [running, setRunning] = useState(false);
     const [clockRate, setClockRate] = useState(1);
     const { computer, setComputer } = useContext(ComputerContext);
+    const [inputChar, setInputChar] = useState('');
 
     const registers = [
         { name: 'SC', value: computer.SC },
@@ -66,6 +67,18 @@ const Simulator = () => {
             .then(data => setComputer(data))
     }
 
+    const handleInputCharChange = e => {
+        if (e.target.value.length <= 1) {
+            setInputChar(e.target.value)
+            fetch(process.env.REACT_APP_API + 'input', {
+                method: 'POST',
+                body: JSON.stringify({ input: e.target.value })
+            })
+                .then(resp => resp.json())
+                .then(data => setComputer(prev => ({ ...prev, INPR: data, FGI: data === '0x0' ? 0 : 1 })))
+        }
+    }
+
     return (
         <>
             <div className={styles.container}>
@@ -91,9 +104,13 @@ const Simulator = () => {
                         ))}
                     </div>
                     <div className={styles.clockContainer}>
-                        <p className={styles.description}>Clock Rate:</p>
+                        <p className={styles.description}>ClockRate:</p>
                         <input type="range" className={styles.range} value={clockRate} min={1} max={10} onChange={e => setClockRate(e.target.value)} />
                         <label>{clockRate}</label>
+                    </div>
+                    <div className={styles.IOContainer}>
+                        <p className={styles.description}>Input:</p>
+                        <input type="text" value={inputChar} onChange={handleInputCharChange} placeholder="Enter single character" />
                     </div>
                     <div className={styles.buttons}>
                         <button onClick={handleRunClick}>{!running ? "RUN" : "STOP"}</button>

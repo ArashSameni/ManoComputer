@@ -155,3 +155,17 @@
   background: #380a8e;
   padding: 5px 10px;
 }
+
+.IOContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.IOContainer input {
+  outline: none;
+  margin-top: 5px;
+  margin-left: 10px;
+  padding: 8px 10px;
+  font-size: 15px;
+}
