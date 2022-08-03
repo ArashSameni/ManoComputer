@@ -67,5 +67,5 @@ def start():
     c.start()
     return jsonify(c.json())
 
-
-app.run()
+if __name__ == "__main__":
+    app.run()
