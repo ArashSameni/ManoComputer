@@ -128,7 +128,7 @@ function createWindow() {
   ipcMain.on('SAVE_AS', (_event, file) => saveAs(file))
 
   //load the index.html from a url
-  mainWindow.loadURL('http://localhost:3000');
+  mainWindow.loadFile('build/index.html');
 
   let menu = Menu.buildFromTemplate([
     {
@@ -236,6 +236,11 @@ function createWindow() {
       ]
     }
   ])
+
+  Menu.setApplicationMenu(menu)
+  // if (process.platform === 'darwin') {
+  //     Menu.unshift({label: ''});
+  // }
   mainWindow.setMenu(menu)
 }
 
